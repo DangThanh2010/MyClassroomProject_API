@@ -12,6 +12,10 @@ const Class = db.define('Class', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  subject: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   inviteLinkTeacher: {
     type: DataTypes.STRING,
     allowNull: true,

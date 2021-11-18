@@ -4,7 +4,7 @@ const User = require('../users/userModel');
 const Class = require('../class/classModel');
 const UserinClass = db.define("UserinClass", {
   role: {
-    type: DataTypes.BOOLEAN, // true: Teacher, false: Student
+    type: DataTypes.INTEGER, // true: Teacher, false: Student
     allowNull: false,
   },
 }, {
