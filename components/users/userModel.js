@@ -1,31 +1,38 @@
 const { DataTypes } = require('sequelize');
 const db = require('../../database');
 
-const Class = db.define('Class', {
+const User = db.define("User", {
   id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     autoIncrement: true,
     primaryKey: true
   },
-  name: {
+  email: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  inviteLinkTeacher: {
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  fullname: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  IDstudent: {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  inviteLinkStudent: {
+  avatar: {
     type: DataTypes.STRING,
     allowNull: true,
   }
-
 }, {
-    tableName: 'Class',
+    tableName: 'User',
     timestamps: false
 }); 
 
-db.sync({ alter: true });
+db.sync({ alter: true }).then(()=> console.log('Create userModel successfully'));
 
-module.exports = Class;
+module.exports = User;
