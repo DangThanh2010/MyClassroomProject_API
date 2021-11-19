@@ -6,18 +6,22 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
-
+const session = require('express-session');
 const indexRouter = require('./routes/index');
 const classRouter = require('./components/class/class');
+const authRouter = require('./components/authentication/authRouter');
 
 const app = express();
-
+const passport = require('passport');
+const passportConfig = require('./middleware/passport');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 app.use(cors())
 
+app.use(passport.initialize());
+// app.use(passport.session());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -27,6 +31,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/class', classRouter);
 
+
+app.use('/auth',authRouter);
+app.get('/secret',passport.authenticate('jwt', {session : false}), (req,res,next) =>{
+  res.json({message: 'You already login', user: req.user});
+});
+// app.post('')
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
