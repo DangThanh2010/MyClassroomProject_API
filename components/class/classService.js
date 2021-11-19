@@ -16,3 +16,11 @@ module.exports.deleteClass = async (id) => {
         }
     })
 }
+module.exports.getClass = async (id) => {
+    const result =await model.findOne({
+        where: {
+            id: id
+        }
+    })
+    return result;
+}
