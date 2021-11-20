@@ -23,4 +23,4 @@ Class.belongsToMany(User, {through: UserinClass});
 
 db.sync({ alter: true }).then(()=> console.log('Create userinclass successfully'));
 
-module.exports = User;
+module.exports = UserinClass;

@@ -27,7 +27,7 @@ const Class = db.define('Class', {
 
 }, {
     tableName: 'Class',
-    timestamps: true
+    timestamps: false
 }); 
 
 db.sync({ alter: true });
