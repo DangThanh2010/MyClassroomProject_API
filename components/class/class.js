@@ -11,4 +11,6 @@ router.post('/', controller.addClass);
 
 router.delete('/:id', controller.deleteClass);
 
+router.post('/:id/invite', controller.sendEmailInvite);
+
 module.exports = router;
