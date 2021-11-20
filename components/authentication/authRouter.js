@@ -18,5 +18,12 @@ router.get('/google',passport.authenticate('google-plus-token'), (req, res) => {
         user: req.user
     })
 });
+router.post('/test', (req, res) => {
+    res.json({
+        success: false,
+        message: 'Request Successfully!!!',
+        data: req.body,
+    });
+});
 //router.post('/register',)
 module.exports = router;
