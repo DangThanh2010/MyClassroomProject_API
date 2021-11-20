@@ -9,10 +9,12 @@ module.exports.register = async (req, res, next) => {
   await service.IsExist(email).then((user) => {
     if (user) {
       res.json({
-        message: "Email already exists",
+        message: "Email already exists!!!",
+        success: false,
       });
     } else {
-      const hashpass = bcrypt.hashSync(password, 10);
+      const salt = bcrypt.genSaltSync(10);
+      const hashpass = bcrypt.hashSync(password, salt);
       const newUser = new User({
         email: email,
         password: hashpass,
@@ -22,9 +24,10 @@ module.exports.register = async (req, res, next) => {
       newUser.save();
       const token = JWTSign(newUser._id, newUser.email);
       res.json({
-        message: "Success register",
+        message: "Register successfully!!!",
+        success: true,
         token: token,
       });
     }
-  });
+  }).catch(err => {console.log(err)});
 };
