@@ -10,7 +10,7 @@ const session = require('express-session');
 const indexRouter = require('./routes/index');
 const classRouter = require('./components/class/class');
 const userInClassRouter = require('./components/user_in_class/user_in_class');
-const userRouter =require('./components/users/userRoute')
+const userRouter =require('./components/users/userRouter')
 const authRouter = require('./components/authentication/authRouter');
 
 const app = express();
@@ -33,7 +33,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/class', classRouter);
 app.use('/userInClass', userInClassRouter);
-app.use('./user', userRouter);
+
+app.use('/user', userRouter);
 
 app.use('/auth',authRouter);
 app.get('/secret',passport.authenticate('jwt', {session : false}), (req,res,next) =>{
