@@ -1,11 +1,17 @@
 const model = require("./userModel");
-const db = require("../../database");
+
 module.exports.findUser = async (email) => {
-  const result = await model.findOne({ email: email });
+  const result = await model.findOne({ where: {email: email }});
   return result;
 };
+
+module.exports.findUserByIDStudent = async (idStudent) => {
+  const result = await model.findOne({where: {IDstudent: idStudent} });
+  return result;
+}
+
 module.exports.getUser = async (id) => {
-  const result = await model.findOne({ id: id });
+  const result = await model.findOne({ where: {id: id }});
   return result;
 };
 
@@ -37,3 +43,13 @@ module.exports.editUserInfo = async (id, info) => {
   );
   return result;
 };
+
+module.exports.editIdStudent = async (id, idStudent) => {
+  return await model.update(
+    {
+      IDstudent: idStudent
+    },
+
+    { where: { id: id } }
+  )
+}
