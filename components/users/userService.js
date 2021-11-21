@@ -1,11 +1,12 @@
 const model = require("./userModel");
-const db = require("../../database");
+
 module.exports.findUser = async (email) => {
   const result = await model.findOne({ email: email });
   return result;
 };
 module.exports.getUser = async (id) => {
-  const result = await model.findOne({ id: id });
+  const result = await model.findOne({ where: { id: id } });
+
   return result;
 };
 
@@ -25,8 +26,6 @@ module.exports.listUser = async () => {
   return result;
 };
 module.exports.editUserInfo = async (id, info) => {
-  console.log("id", id);
-  console.log(info);
   const result = await model.update(
     {
       fullname: info.fullname || "",
