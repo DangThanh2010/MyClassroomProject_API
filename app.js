@@ -30,13 +30,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/auth',authRouter);
+app.use(passport.authenticate('jwt', {session : false}));
 app.use('/', indexRouter);
 app.use('/class', classRouter);
 app.use('/userInClass', userInClassRouter);
 
 app.use('/user', userRouter);
 
-app.use('/auth',authRouter);
 app.get('/secret',passport.authenticate('jwt', {session : false}), (req,res,next) =>{
   res.json({message: 'You already login', user: req.user});
 });

@@ -54,7 +54,7 @@ passport.use(new LocalStrategy(
   function(email, password, done) {
     console.log("email ", email);
     console.log("password ", password);
-    User.findOne({ email: email }).then(user => {
+    User.findOne({where: {email: email} }).then(user => {
       if(user){
         if(bcrypt.compareSync(password, user.password)){
           done(null, user);
@@ -78,10 +78,10 @@ passport.use(
     async function (jwt_payload, done) {
       try {
         console.log(jwt_payload);
-        const user = await new User.findOne({
+        const user = await User.findOne({
           where: { email: jwt_payload.email },
         });
-        if (user) return done(null, false);
+        if (!user) return done(null, false);
         else return done(null, user);
       } catch (err) {
         done(err, false);
