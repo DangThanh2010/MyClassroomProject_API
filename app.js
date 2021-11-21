@@ -12,7 +12,7 @@ const classRouter = require('./components/class/class');
 const userInClassRouter = require('./components/user_in_class/user_in_class');
 const userRouter =require('./components/users/userRouter')
 const authRouter = require('./components/authentication/authRouter');
-
+const avatarRouter =require('./components/avatar/avatarRouter')
 const app = express();
 const passport = require('passport');
 const passportConfig = require('./middleware/passport');
@@ -37,7 +37,7 @@ app.use('/class', classRouter);
 app.use('/userInClass', userInClassRouter);
 
 app.use('/user', userRouter);
-
+app.use('/image', avatarRouter)
 app.get('/secret',passport.authenticate('jwt', {session : false}), (req,res,next) =>{
   res.json({message: 'You already login', user: req.user});
 });

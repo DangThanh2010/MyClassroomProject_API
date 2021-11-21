@@ -31,8 +31,6 @@ module.exports.listUser = async () => {
   return result;
 };
 module.exports.editUserInfo = async (id, info) => {
-  console.log("id", id);
-  console.log(info);
   const result = await model.update(
     {
       fullname: info.fullname || "",
