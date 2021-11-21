@@ -20,9 +20,9 @@ passport.use(
       //     return next(error, user);
       // });
       try {
-        console.log("accessToken ", accessToken);
-        console.log("refreshToken ", refreshToken);
-        console.log("profile ", profile);
+        // console.log("accessToken ", accessToken);
+        // console.log("refreshToken ", refreshToken);
+        // console.log("profile ", profile);
 
         const user = await User.findOne({
           where: { authGoogleID: profile.id, authType: "google" },
@@ -55,10 +55,14 @@ passport.use(new LocalStrategy(
     console.log("email ", email);
     console.log("password ", password);
     User.findOne({ email: email }).then(user => {
-      if(bcrypt.compareSync(password, user.password)){
-        done(null, user);
+      if(user){
+        if(bcrypt.compareSync(password, user.password)){
+          done(null, user);
+        }else{
+          done(null,false, {message: "Password mismatch with email"});
+        }
       }else{
-        done(null,false);
+        done(null,false, {message: "Email not found"});
       }
     });
   }

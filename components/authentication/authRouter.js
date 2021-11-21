@@ -5,19 +5,9 @@ const controller = require('./authController');
 const passport = require('passport');
 const passportConfig = require('../../middleware/passport');
 
-router.post('/login',passport.authenticate('local') ,(req, res) => {
-    res.json({
-        message: 'You already login with this email and password',
-        user: req.user,
-    });
-});
+router.post('/login',passport.authenticate('local') ,controller.LoginWithLocal);
 router.post('/register',controller.register);
-router.get('/google',passport.authenticate('google-plus-token'), (req, res) => {
-    res.json({
-        message: 'You already login with Google',
-        user: req.user
-    })
-});
+router.post('/google',controller.ImportDataGoogle, controller.LoginWithGoogle);
 router.post('/test', (req, res) => {
     res.json({
         success: false,
