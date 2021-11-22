@@ -3,15 +3,20 @@ const nodemailer = require('nodemailer');
 const service = require('./classService');
 
 module.exports.listClass = async (req, res, next) => {
-    const listClass = await service.listClass();
-    res.json(listClass);
+    console.log(req.user);
+    const listClass = await service.listClass(req.user);
+    res.json(listClass.Classes);
 }
 
 module.exports.getClass = async (req, res, next) => {
     const result = await service.getClass(parseInt(req.params.id));
+    const role = await service.getRoleClass(parseInt(req.params.id),req.user.id);
     res.json(result);
 }
-
+module.exports.getRoleClass = async (req, res, next) => {
+    const role = await service.getRoleClass(parseInt(req.params.id),req.user.id);
+    res.json(role);
+}
 module.exports.addClass = async (req, res, next) => {
     if(req.body.name !== "" && req.body.name !== null && req.body.name !== undefined)
     {
@@ -23,7 +28,7 @@ module.exports.addClass = async (req, res, next) => {
 }
 
 module.exports.deleteClass = async (req, res, next) => {
-    await service.deleteClass(parseInt(req.params.id));
+    await service.removeClass(req.user.id,parseInt(req.params.id));
     res.json('Delete successful');
 }
 
