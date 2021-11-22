@@ -13,14 +13,14 @@ passport.use(
       clientID:
         "959295540823-84njq0si2t07n4631pc5odd5q1bfjk2u.apps.googleusercontent.com",
       clientSecret: "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",
-      passReqToCallback: true,
+      // passReqToCallback: true,
     },
     async function (req, accessToken, refreshToken, profile, done) {
       // User.findOrCreate({'google.id': profile.id}, function(error, user) {
       //     return next(error, user);
       // });
       try {
-        // console.log("accessToken ", accessToken);
+        console.log("accessToken ", accessToken);
         // console.log("refreshToken ", refreshToken);
         // console.log("profile ", profile);
 

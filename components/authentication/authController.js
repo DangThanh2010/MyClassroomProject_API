@@ -37,30 +37,33 @@ module.exports.register = async (req, res, next) => {
 };
 module.exports.ImportDataGoogle = async (req, res, next) => {
   const { profile } = req.body;
-  const user = await User.findOne({
+  await User.findOne({
     where: { authGoogleID: profile.googleId, authType: "google" },
+  }).then(async (user) => {
+    // Check user exist
+    if (user) {
+      req.user = user;
+      return next();
+    } else {
+      const newUser = new User({
+        authType: "google",
+        email: profile.email,
+        avatar: profile.imageUrl,
+        authGoogleID: profile.googleId,
+        fullname: profile.familyName + " " + profile.givenName,
+      });
+      await newUser.save();
+      req.user = user;
+      return next();
+    }
   });
-  // Check user exist
-  if (user) {
-    req.user = user;
-    next();
-  } else {
-    const newUser = new User({
-      authType: "google",
-      email: profile.email,
-      avatar: profile.imageUrl,
-      authGoogleID: profile.googleId,
-      fullname: profile.familyName + " " + profile.givenName,
-    });
-    await newUser.save();
-    req.user = user;
-    next();
-  }
 };
 module.exports.LoginWithGoogle = (req, res) => {
+  const token = JWTSign(req.user.id, req.user.email);
   res.json({
     message: "You already login with Google",
-    user: req.user,
+    token: token,
+    expAt: new Date().getTime() + 43200000,
   });
 };
 
