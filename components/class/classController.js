@@ -52,7 +52,7 @@ module.exports.deleteOrLeaveClass = async (req, res, next) => {
 module.exports.sendEmailInvite = async (req, res, next) => {
     const cls = await service.getClass(parseInt(req.params.id));
 
-    if(cls && req.body.email && req.query.role)
+    if(cls && req.body.email && req.query.role && req.body.url)
     {
         const transporter = nodemailer.createTransport({
             service: "gmail",
@@ -66,8 +66,8 @@ module.exports.sendEmailInvite = async (req, res, next) => {
             from: process.env.EMAIL_USER, 
             to: req.body.email, 
             subject: req.query.role === "Teacher" ? "Lời mời cùng dạy lớp: " + cls.name : "Lời mời tham gia lớp: " + cls.name,
-            text: req.query.role === "Teacher" ?  "Bạn có một lời mời cùng dạy lớp " + cls.name + "\nLink tham gia: " + cls.inviteLinkTeacher
-                    : "Bạn có một lời mời tham gia lớp " + cls.name + "\nLink tham gia: " + cls.inviteLinkStudent,
+            text: req.query.role === "Teacher" ?  "Bạn có một lời mời cùng dạy lớp " + cls.name + "\nLink tham gia: " + req.body.url + cls.inviteCodeTeacher
+                    : "Bạn có một lời mời tham gia lớp " + cls.name + "\nLink tham gia: " + req.body.url + cls.inviteCodeStudent,
         };
         
         transporter.sendMail(mailOptions, function(error, info){

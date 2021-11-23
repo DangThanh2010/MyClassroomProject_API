@@ -10,7 +10,7 @@ module.exports.register = async (req, res, next) => {
     .then((user) => {
       if (user) {
         res.json({
-          message: "Email already exists!!!",
+          message: "Email đã tồn tại!!!",
           success: false,
         });
       } else {
@@ -25,7 +25,7 @@ module.exports.register = async (req, res, next) => {
         newUser.save();
         const token = JWTSign(newUser._id);
         res.json({
-          message: "Register successfully!!!",
+          message: "Đăng ký thành công!!!",
           success: true,
           token: token,
         });

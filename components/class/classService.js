@@ -8,7 +8,7 @@ module.exports.listClass = async (user) => {
 }
 
 module.exports.addClass = async (user, name, subject) => {
-    const cls = await Class.create({'name' : name, 'subject' : subject});
+    const cls = await Class.create({'name' : name, 'subject' : subject, 'inviteCodeTeacher': generateClassCode(8), 'inviteCodeStudent': generateClassCode(8)});
     await UserInClass.create({'role': 2, 'UserId': user.id, 'ClassId': cls.id})
 }
 
@@ -37,5 +37,18 @@ module.exports.getRoleClass = async (classID, userID) => {
     const result = await UserInClass.findOne({
         where: {ClassId: classID, UserId: userID}
     });
+    return result;
+}
+
+function generateClassCode(length) {
+    const characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const charactersLength = characters.length;
+  
+    let result = "";
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+  
     return result;
 }
