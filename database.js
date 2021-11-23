@@ -5,12 +5,11 @@ const db = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.e
     dialect: 'postgres',
     port: 5432,
 
-    // dialectOptions: {ssl: {
-    //     require: true,
-    //     rejectUnauthorized: false
-    //     }
-    // },
-    ssl: true,
+    dialectOptions: {ssl: {
+        require: true,
+        rejectUnauthorized: false
+        }
+    },
 });
 try {
     db.authenticate().then(
