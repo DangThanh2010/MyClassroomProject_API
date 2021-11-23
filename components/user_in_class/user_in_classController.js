@@ -27,3 +27,8 @@ module.exports.addTeacherToClass = async (req, res, next) => {
   await service.addTeacherToClass(req.user.id, req.params.codeTeacher);
   res.json('Add successful');
 }
+module.exports.getRole = async (req, res, next) => {
+  
+  const result =await service.getRole(req.user.id, req.params.classId);
+  res.json(result);
+}

@@ -96,3 +96,14 @@ module.exports.addTeacherToClass = async (userId, codeTeacher) => {
   }
   return [];
 };
+module.exports.getRole = async (userId, classId) => {
+  const role = await userInClassModel.findOne({
+    where: {
+      UserId: userId,
+      ClassId: classId,
+    },
+    attributes: ["role"],
+  });
+  if(role) return role;
+  return null;
+}
