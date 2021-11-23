@@ -17,3 +17,13 @@ module.exports.listUserInClass = async (req, res, next) => {
     res.json(result);
   }
 }
+module.exports.addStudentToClass = async (req, res, next) => {
+
+  await service.addStudentToClass(req.user.id, req.params.codeStudent);
+  res.json('Add successful');
+}
+module.exports.addTeacherToClass = async (req, res, next) => {
+
+  await service.addTeacherToClass(req.user.id, req.params.codeTeacher);
+  res.json('Add successful');
+}
