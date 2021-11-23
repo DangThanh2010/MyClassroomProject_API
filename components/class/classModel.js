@@ -1,6 +1,17 @@
 const { DataTypes } = require('sequelize');
 const db = require('../../database');
+function generateClassCode(length) {
+  const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const charactersLength = characters.length;
 
+  let result = "";
+  for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+
+  return result;
+}
 const Class = db.define('Class', {
   id: {
     type: DataTypes.INTEGER,
@@ -16,13 +27,13 @@ const Class = db.define('Class', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  inviteLinkTeacher: {
+  inviteCodeTeacher: {
     type: DataTypes.STRING,
-    allowNull: true,
+    defaultValue: generateClassCode(8)
   },
-  inviteLinkStudent: {
+  inviteCodeStudent: {
     type: DataTypes.STRING,
-    allowNull: true,
+    defaultValue: generateClassCode(8)
   }
 
 }, {

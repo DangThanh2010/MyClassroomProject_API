@@ -8,7 +8,7 @@ module.exports.updateAvatar = async (req, res, next) => {
     try {
         // console.log(req.file);
         const uploadRes = await uploadSingleImage(req.file.path, "web-avatar");
-        const updateAvatar = await service.updateAvatar(parseInt(req.params.id), uploadRes.url);
+        await service.updateAvatar(req.user.id, uploadRes.url);
         res.json(uploadRes.url); 
     } catch (error) {
         console.log(error)
