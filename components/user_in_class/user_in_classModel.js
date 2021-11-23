@@ -3,14 +3,8 @@ const db = require('../../database');
 const User = require('../users/userModel');
 const Class = require('../class/classModel');
 const UserinClass = db.define("UserinClass", {
-  // id: {
-  //   type: DataTypes.INTEGER,
-  //   allowNull: false,
-  //   autoIncrement: true,
-  //   primaryKey: true
-  // },
   role: {
-    type: DataTypes.INTEGER, // true: Teacher, false: Student
+    type: DataTypes.INTEGER, //0: Student, 1: Teacher, 2: Teacher create class
     allowNull: false,
   },
 }, {

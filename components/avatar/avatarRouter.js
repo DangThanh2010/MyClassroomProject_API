@@ -15,8 +15,5 @@ const upload = multer({
 });
 
 router.post('/:id', upload.single('image'), controller.updateAvatar);
-// router.post('/', controller.addUser);
-
-// router.delete('/:id', controller.deleteUser);
 
 module.exports = router;

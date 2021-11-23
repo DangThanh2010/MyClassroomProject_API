@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const db = require('../../database');
-const bcrypt = require('bcrypt');
+
 const User = db.define("User", {
   id: {
     type: DataTypes.INTEGER,
@@ -17,14 +17,10 @@ const User = db.define("User", {
   },
   authType:{
     type: DataTypes.STRING,
-    enum: ['local', 'google', 'facebook'],
+    enum: ['local', 'google'],
     defaultValue: 'local',
   },
   authGoogleID:{
-    type: DataTypes.STRING,
-    defaultValue: null,
-  },
-  authFacebookID:{
     type: DataTypes.STRING,
     defaultValue: null,
   },
@@ -45,10 +41,7 @@ const User = db.define("User", {
     tableName: 'User',
     timestamps: false
 });
-// Class Method
-// User.associate = function verifyPassword(password){
-//   return bcrypt.compareSync(password,this.password);
-// }
+
 db.sync({ alter: true }).then(()=> console.log('Create userModel successfully'));
 
 module.exports = User;

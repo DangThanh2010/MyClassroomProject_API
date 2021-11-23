@@ -16,5 +16,5 @@ router.post('/test', (req, res) => {
         data: req.body,
     });
 });
-//router.post('/register',)
+
 module.exports = router;

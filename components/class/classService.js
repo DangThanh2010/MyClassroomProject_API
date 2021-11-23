@@ -39,9 +39,3 @@ module.exports.getRoleClass = async (classID, userID) => {
     });
     return result;
 }
-
-
-User.findOne({include: Class, where: {id : 4}}).then((result) => {
-    console.log("\n data result",JSON.stringify(result[0]));
-    
-});

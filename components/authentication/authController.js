@@ -23,7 +23,7 @@ module.exports.register = async (req, res, next) => {
           fullname: fullname,
         });
         newUser.save();
-        const token = JWTSign(newUser._id, newUser.email);
+        const token = JWTSign(newUser._id);
         res.json({
           message: "Register successfully!!!",
           success: true,
@@ -53,13 +53,13 @@ module.exports.ImportDataGoogle = async (req, res, next) => {
         fullname: profile.familyName + " " + profile.givenName,
       });
       await newUser.save();
-      req.user = user;
+      req.user = newUser;
       return next();
     }
   });
 };
 module.exports.LoginWithGoogle = (req, res) => {
-  const token = JWTSign(req.user.id, req.user.email);
+  const token = JWTSign(req.user.id);
   res.json({
     message: "You already login with Google",
     token: token,
@@ -68,7 +68,7 @@ module.exports.LoginWithGoogle = (req, res) => {
 };
 
 module.exports.LoginWithLocal = (req, res) => {
-  const token = JWTSign(req.user.id, req.user.email);
+  const token = JWTSign(req.user.id);
   res.json({
     message: "You already login with this email and password",
     user: req.user,
