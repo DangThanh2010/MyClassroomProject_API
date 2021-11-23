@@ -84,3 +84,4 @@ module.exports.sendEmailInvite = async (req, res, next) => {
         res.json({"result": 0});
     }
 }
+

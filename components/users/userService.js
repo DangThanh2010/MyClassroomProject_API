@@ -26,7 +26,7 @@ module.exports.editUserInfo = async (id, info) => {
   const result = await model.update(
     {
       fullname: info.fullname || "",
-      email: info.email || "",
+      // email: info.email || "",
     },
 
     { where: { id: id } }

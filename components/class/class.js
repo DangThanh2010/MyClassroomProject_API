@@ -14,5 +14,5 @@ router.post('/', controller.addClass);
 router.delete('/:id', controller.deleteOrLeaveClass);
 
 router.post('/:id/invite', controller.sendEmailInvite);
-
+// router.post('/sharedBoard', controller.sharedLink);
 module.exports = router;

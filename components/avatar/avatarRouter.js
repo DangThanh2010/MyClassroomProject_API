@@ -14,6 +14,7 @@ const upload = multer({
     storage: storage
 });
 
-router.post('/:id', upload.single('image'), controller.updateAvatar);
+
+router.post('/', upload.single('image'), controller.updateAvatar);
 
 module.exports = router;

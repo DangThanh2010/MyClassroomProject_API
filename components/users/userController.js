@@ -11,22 +11,41 @@ module.exports.listUser = async (req, res, next) => {
 }
 
 module.exports.editUserInfo = async (req, res, next) => {
-  const id = parseInt(req.params.id);
-  try {
-    const info = {
-      fullname: req.body.name || "",
-      email: req.body.email || "",
-    };
-    const user = await service.editUserInfo(id, info);
-    if (user) {
-      res.json({ status: 1, msg: "Success", user: user });
-    } else {
-      res.json({ status: -1, msg: "Failed" });
+
+    
+    const id = parseInt(req.params.id);
+    try {
+      const info = {
+        fullname: req.body.name || "",
+      };
+      const user = await service.editUserInfo(id, info);
+      if (user) {
+        res.json({ status: 1, msg: "Success", user: user });
+      } else {
+        res.json({ status: -1, msg: "Failed" });
+      }
+    } catch (error) {
+      console.log(error)
     }
-  } catch (error) {
-    console.log(error)
-  }
-};
+  };
+  module.exports.postMyself = async (req, res, next) => {
+    
+    
+    try {
+      const info = {
+        fullname: req.body.name || "",
+        email: req.body.email || "",
+      };
+      const user = await service.editUserInfo(req.user.id, info);
+      if (user) {
+        res.json({ status: 1, msg: "Success", user: user });
+      } else {
+        res.json({ status: -1, msg: "Failed" });
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  };
 
 module.exports.getMyself = async (req, res, next) => {
   if(req.user){
