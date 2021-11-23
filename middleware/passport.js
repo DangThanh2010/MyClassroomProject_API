@@ -54,7 +54,7 @@ passport.use(new LocalStrategy(
   function(email, password, done) {
     console.log("email ", email);
     console.log("password ", password);
-    User.findOne({where: {email: email} }).then(user => {
+    User.findOne({where: {email: email, authType: "local"} }).then(user => {
       if(user){
         if(bcrypt.compareSync(password, user.password)){
           done(null, user);

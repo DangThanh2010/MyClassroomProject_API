@@ -1,9 +1,5 @@
 const model = require("./userModel");
 
-module.exports.findUser = async (email) => {
-  const result = await model.findOne({ where: {email: email }});
-  return result;
-};
 
 module.exports.findUserByIDStudent = async (idStudent) => {
   const result = await model.findOne({where: {IDstudent: idStudent} });
