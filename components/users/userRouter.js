@@ -11,5 +11,5 @@ router.get('/', controller.listUser);
 router.get('/myself/get', controller.getMyself);
 router.post('/myself', controller.postMyself);
 router.post('/myself/mapping', controller.mappingAccount);
-
+router.post('/changePassword', controller.changePassword)
 module.exports = router;

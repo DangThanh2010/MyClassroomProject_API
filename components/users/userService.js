@@ -43,3 +43,12 @@ module.exports.editIdStudent = async (id, idStudent) => {
     { where: { id: id } }
   )
 }
+
+module.exports.updatePassword= async (id, newPass) => {
+  return await model.update(
+    {
+      password:newPass
+    },
+    { where: { id } }
+  )
+}
