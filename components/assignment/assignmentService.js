@@ -29,6 +29,29 @@ module.exports.addAssignment = async (classId, name, point) => {
     return false;
 }
 
-module.exports.listAssignment = async (id) => {
-    return await model.findAll({where: {ClassId: id}});
+module.exports.deleteAssignment = async (id) => {
+  const assignment = await Assignment.findOne({where: {id: id}});
+  if(assignment){
+    const listAssignment = await Assignment.findAll({where: {ClassId: assignment.ClassId}});
+    if(listAssignment.length !== 1){
+      for(let i = 0; i < listAssignment.length; i++){
+        if(listAssignment[i].NO > assignment.NO){
+          await Assignment.update(
+            { NO: listAssignment[i].NO - 1},
+            {where: {id: listAssignment[i].id}}
+          );
+        }
+      }
+    }
+    await Assignment.destroy({
+      where: {id: assignment.id}
+    });
+    return true;
+  }
+  else 
+    return false;
+}
+
+module.exports.listAssignment = async (classId) => {
+    return await model.findAll({where: {ClassId: classId}});
 }

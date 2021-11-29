@@ -13,9 +13,23 @@ module.exports.addAssignment = async (req, res, next) => {
   else
       res.json('Create unsuccessful');
 }
+
+module.exports.deleteAssignment = async (req, res, next) => {
+  if(req.params.id)
+  {
+    const result = await service.deleteAssignment(parseInt(req.params.id));
+    if(result)
+      res.json('Delete successful');
+    else
+      res.json('Delete unsuccessful');
+  }
+  else
+      res.json('Delete unsuccessful');
+}
+
 module.exports.listAssignment = async (req, res, next) => {
     if(req.user){
-        const result = await service.listAssignment(req.params.id);
+        const result = await service.listAssignment(req.params.classId);
         res.json(result);
     }
     else 

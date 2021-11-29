@@ -5,7 +5,9 @@ const controller = require('./assignmentController');
 
 router.post('/:classId', controller.addAssignment);
 
-router.get('/:id', function (req, res){
+router.delete('/:id', controller.deleteAssignment);
+
+router.get('/:classId', function (req, res){
         
 });
 
