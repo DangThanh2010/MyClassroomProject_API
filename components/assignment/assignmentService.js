@@ -3,15 +3,15 @@ const Class = require('../class/classModel');
 
 module.exports.addAssignment = async (classId, name, point) => {
   const cls = await Class.findOne({where: {id: classId}});
-  const listAssigment = await Assignment.findAll({where: {ClassId: classId}});
+  const listAssignment = await Assignment.findAll({where: {ClassId: classId}});
 
   if(cls){
-    if(listAssigment){
+    if(listAssignment){
       await Assignment.create({
         name: name,
         point: point,
         ClassId: classId,
-        NO: listAssigment.length + 1
+        NO: listAssignment.length + 1
       });
       return true;
     }
@@ -27,4 +27,8 @@ module.exports.addAssignment = async (classId, name, point) => {
   }
   else
     return false;
+}
+
+module.exports.listAssignment = async (id) => {
+    return await model.findAll({where: {ClassId: id}});
 }
