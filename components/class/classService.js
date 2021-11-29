@@ -17,9 +17,8 @@ module.exports.addClass = async (user, name, subject) => {
     checkCodeStudent=await Class.findOne({
         where: { inviteCodeStudent: codeStudent },
       });
-    //   console.log("checkCodeStudent", checkCodeStudent)
   }
-  console.log(codeStudent)
+  
   while (checkCodeTeacher==0||checkCodeTeacher!=null) {
     codeTeacher=generateClassCode(8);
     checkCodeTeacher=await Class.findOne(

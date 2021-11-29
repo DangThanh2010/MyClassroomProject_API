@@ -12,7 +12,8 @@ const classRouter = require('./components/class/class');
 const userInClassRouter = require('./components/user_in_class/user_in_class');
 const userRouter =require('./components/users/userRouter')
 const authRouter = require('./components/authentication/authRouter');
-const avatarRouter =require('./components/avatar/avatarRouter')
+const avatarRouter =require('./components/avatar/avatarRouter');
+const assignmentRouter = require('./components/assignment/assignmentRouter');
 const app = express();
 const passport = require('passport');
 const passportConfig = require('./middleware/passport');
@@ -35,6 +36,7 @@ app.use(passport.authenticate('jwt', {session : false}));
 app.use('/', indexRouter);
 app.use('/class', classRouter);
 app.use('/userInClass', userInClassRouter);
+app.use('/assignment', assignmentRouter);
 
 app.use('/user', userRouter);
 app.use('/image', avatarRouter)
