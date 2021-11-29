@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const db = require('../../database');
-const Assignment = require('../assignment/assignmentModel');
-const Class = db.define('Class', {
+
+const Assignment = db.define('Assignment', {
   id: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -12,24 +12,22 @@ const Class = db.define('Class', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  subject: {
-    type: DataTypes.STRING,
+  point: {
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
-  inviteCodeTeacher: {
-    type: DataTypes.STRING,
+  ClassId: {
+    type: DataTypes.INTEGER,
   },
-  inviteCodeStudent: {
-    type: DataTypes.STRING,
+  NO: {
+    type: DataTypes.INTEGER,
   }
 
 }, {
-    tableName: 'Class',
+    tableName: 'Assignment',
     timestamps: false
 }); 
-Class.hasMany(Assignment,{
-  foreignKey: 'ClassId'
-})
+
 db.sync({ alter: true });
 
-module.exports = Class;
+module.exports = Assignment;
