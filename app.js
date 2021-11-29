@@ -35,7 +35,7 @@ app.use(passport.authenticate('jwt', {session : false}));
 app.use('/', indexRouter);
 app.use('/class', classRouter);
 app.use('/userInClass', userInClassRouter);
-
+app.use('/assignment', assignmentRouter);
 app.use('/user', userRouter);
 app.use('/image', avatarRouter)
 app.get('/secret',passport.authenticate('jwt', {session : false}), (req,res,next) =>{
