@@ -1,10 +1,10 @@
 const service = require('./assignmentService');
-const Assignment = require('./assignmentModel');
+
 module.exports.addAssignment = async (req, res, next) => {
   if(req.params.classId && req.body.name !== "" && req.body.name !== null && req.body.name !== undefined &&
-    req.body.point !== "" && parseInt(req.body.point) !== null && parseInt(req.body.point) !== undefined)
+    req.body.point !== "" && parseFloat(req.body.point) !== null && parseFloat(req.body.point) !== undefined)
   {
-    const result = await service.addAssignment(parseInt(req.params.classId), req.body.name, parseInt(req.body.point));
+    const result = await service.addAssignment(parseInt(req.params.classId), req.body.name, parseFloat(req.body.point));
     if(result)
       res.json('Create successful');
     else

@@ -11,7 +11,7 @@ module.exports.addAssignment = async (classId, name, point) => {
         name: name,
         point: point,
         ClassId: classId,
-        NO: listAssignment.length + 1
+        NO: listAssignment.length
       });
       return true;
     }
@@ -20,7 +20,7 @@ module.exports.addAssignment = async (classId, name, point) => {
         name: name,
         point: point,
         ClassId: classId,
-        NO: 1
+        NO: 0
       });
       return true;
     }
