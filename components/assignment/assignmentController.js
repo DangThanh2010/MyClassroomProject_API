@@ -28,11 +28,14 @@ module.exports.deleteAssignment = async (req, res, next) => {
 }
 
 module.exports.listAssignment = async (req, res, next) => {
-    if(req.user){
-        const result = await service.listAssignment(req.params.classId);
+    // if(req.user){
+    //     const result = await service.listAssignment(req.params.classId);
+    //     res.json(result);
+    // }
+    // else 
+    //     res.json();
+
+    const result = await service.listAssignment(req.params.classId);
         res.json(result);
-    }
-    else 
-        res.json();
 
 }

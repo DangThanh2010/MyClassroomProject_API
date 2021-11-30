@@ -7,9 +7,7 @@ router.post('/:classId', controller.addAssignment);
 
 router.delete('/:id', controller.deleteAssignment);
 
-router.get('/:classId', function (req, res){
-        
-});
+router.get('/:classId', controller.listAssignment);
 
 
 

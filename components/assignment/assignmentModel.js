@@ -13,7 +13,7 @@ const Assignment = db.define('Assignment', {
     allowNull: false,
   },
   point: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.DOUBLE,
     allowNull: false,
   },
   ClassId: {

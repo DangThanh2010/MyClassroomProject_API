@@ -53,5 +53,5 @@ module.exports.deleteAssignment = async (id) => {
 }
 
 module.exports.listAssignment = async (classId) => {
-    return await model.findAll({where: {ClassId: classId}});
+    return await Assignment.findAll({where: {ClassId: classId}});
 }
