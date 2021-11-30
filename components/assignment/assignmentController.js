@@ -31,9 +31,10 @@ module.exports.listAssignment = async (req, res, next) => {
     const result = await service.listAssignment(req.params.classId)
     res.json(result);
 }
+
 module.exports.updateIndex = async (req, res) => {
   const idxAssignment = req.body.data;
-  console.log("list",idxAssignment);
+
   Promise.all(idxAssignment.map(async (item, index)=>{
     return await service.updateIndex(item.id,item.NO);
   })).then(function(result){        

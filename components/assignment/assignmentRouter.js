@@ -12,6 +12,4 @@ router.delete('/:id', controller.deleteAssignment);
 router.get('/:classId', controller.listAssignment);
 
 
-
-
 module.exports = router;
