@@ -6,12 +6,12 @@ module.exports.addAssignment = async (req, res, next) => {
   {
     const result = await service.addAssignment(parseInt(req.params.classId), req.body.name, parseFloat(req.body.point));
     if(result)
-      res.json('Create successful');
+      res.json({status: 1,  msg: 'Tạo thành công'});
     else
-      res.json('Create unsuccessful');
+      res.json({status: -1, msg:'Tạo thất bại. Vui lòng thử lại'});
   }
   else
-      res.json('Create unsuccessful');
+      res.json({status: -1, msg:'Tạo thất bại. Vui lòng thử lại'});
 }
 
 module.exports.deleteAssignment = async (req, res, next) => {
@@ -19,12 +19,12 @@ module.exports.deleteAssignment = async (req, res, next) => {
   {
     const result = await service.deleteAssignment(parseInt(req.params.id));
     if(result)
-      res.json('Delete successful');
+      res.json({status: 1,  msg: 'Xoá thành công'});
     else
-      res.json('Delete unsuccessful');
+      res.json({status: -1, msg:'Xoá thất bại. Vui lòng thử lại'});
   }
   else
-      res.json('Delete unsuccessful');
+      res.json({status: -1, msg:'Xoá thất bại. Vui lòng thử lại'});
 }
 
 module.exports.listAssignment = async (req, res, next) => {
@@ -48,12 +48,10 @@ module.exports.updateAssignment = async (req, res, next) => {
   try {
     const result = await service.updateAssignment(parseInt(req.params.id), req.body);
     if(result)
-      res.json('Delete successful');
+      res.json({status: 1,  msg: 'Cập nhật thành công'});
     else
-      res.json('Delete unsuccessful');
+      res.json({status: -1, msg:'Cập nhật thất bại. Vui lòng thử lại'});
   } catch (error) {
-    res.json('Delete unsuccessful');
+    res.json({status: -1, msg: 'Cập nhật thất bại. Vui lòng thử lại'});
   }
-  
-      
 }
