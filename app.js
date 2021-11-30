@@ -39,9 +39,7 @@ app.use('/userInClass', userInClassRouter);
 app.use('/assignment', assignmentRouter);
 app.use('/user', userRouter);
 app.use('/image', avatarRouter)
-app.get('/secret',passport.authenticate('jwt', {session : false}), (req,res,next) =>{
-  res.json({message: 'You already login', user: req.user});
-});
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
