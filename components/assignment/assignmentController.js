@@ -43,3 +43,17 @@ module.exports.updateIndex = async (req, res) => {
     res.status(500).json(err);
     }) 
 }
+
+module.exports.updateAssignment = async (req, res, next) => {
+  try {
+    const result = await service.updateAssignment(parseInt(req.params.id), req.body);
+    if(result)
+      res.json('Delete successful');
+    else
+      res.json('Delete unsuccessful');
+  } catch (error) {
+    res.json('Delete unsuccessful');
+  }
+  
+      
+}

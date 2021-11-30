@@ -59,3 +59,7 @@ module.exports.listAssignment = async (classId) => {
 module.exports.updateIndex = async (id, NO) => {
   return await Assignment.update({NO: NO}, {where: {id: id}});
 }
+
+module.exports.updateAssignment = async (id, content) => {
+  return await Assignment.update({name: content.name, point:content.point}, {where: {id: id}});
+}
