@@ -28,18 +28,17 @@ module.exports.deleteAssignment = async (req, res, next) => {
 }
 
 module.exports.listAssignment = async (req, res, next) => {
-    await service.listAssignment(req.params.classId).then((result) => {
-      res.json(result);
-    });
+    const result = await service.listAssignment(req.params.classId)
+    res.json(result);
 }
 module.exports.updateIndex = async (req, res) => {
-      const idxAssignment = req.body.data;
-      console.log("list",idxAssignment);
-      Promise.all(idxAssignment.map(async (item, index)=>{
-        return await service.updateIndex(item.id,item.NO);
-        })).then(function(result){        
-        res.status(200).json({message: "successfully"});
-        }).catch(function(err){
-        res.status(500).json(err);
-        }) 
+  const idxAssignment = req.body.data;
+  console.log("list",idxAssignment);
+  Promise.all(idxAssignment.map(async (item, index)=>{
+    return await service.updateIndex(item.id,item.NO);
+  })).then(function(result){        
+    res.status(200).json({message: "successfully"});
+    }).catch(function(err){
+    res.status(500).json(err);
+    }) 
 }

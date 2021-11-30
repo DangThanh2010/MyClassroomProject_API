@@ -54,7 +54,6 @@ module.exports.deleteAssignment = async (id) => {
 
 module.exports.listAssignment = async (classId) => {
     return await Assignment.findAll({where: {ClassId: classId}, order: [['NO', 'ASC']]});
-    return await Class.findByPk(classId,{order: ['NO','DESC']},{include: Assignment});
 }
 
 module.exports.updateIndex = async (id, NO) => {
