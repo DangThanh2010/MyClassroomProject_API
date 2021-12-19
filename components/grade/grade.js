@@ -6,3 +6,4 @@ const router = express.Router();
 router.get('/grade', function (req, res) {
     res.json();
 })
+module.exports = router;
