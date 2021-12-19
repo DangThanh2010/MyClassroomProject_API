@@ -8,3 +8,8 @@ module.exports.listGrade = async function (req, res, next) {
         message: 'Successfully!!!',
     });
 }
+module.exports.updateGrade = async function (req, res, next) {
+    const {id, point} = req.body;
+    await service.updateGrade(id, point);
+    res.json({success: true, message: 'Update Successfully!'});
+}
