@@ -14,11 +14,11 @@ const Grade = db.define('Grade', {
   },
   fullName: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   point: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
   },
 }, {
     tableName: 'Grade',

@@ -28,7 +28,7 @@ const Assignment = db.define('Assignment', {
     timestamps: false
 }); 
 Assignment.hasMany(Grade,{
-  foreignKey: 'ClassId'
+  foreignKey: 'AssignmentId'
 })
 db.sync({ alter: true });
 
