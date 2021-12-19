@@ -1,35 +1,30 @@
 const { DataTypes } = require('sequelize');
 const db = require('../../database');
-const Grade = require('../grade/gradeModel');
-const Assignment = db.define('Assignment', {
+
+const Grade = db.define('Grade', {
   id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     autoIncrement: true,
     primaryKey: true
   },
-  name: {
+  studentId: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  fullName: {
     type: DataTypes.STRING,
     allowNull: false,
   },
   point: {
-    type: DataTypes.DOUBLE,
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
-  ClassId: {
-    type: DataTypes.INTEGER,
-  },
-  NO: {
-    type: DataTypes.INTEGER,
-  }
-
 }, {
-    tableName: 'Assignment',
+    tableName: 'Grade',
     timestamps: false
 }); 
-Assignment.hasMany(Grade,{
-  foreignKey: 'ClassId'
-})
+
 db.sync({ alter: true });
 
-module.exports = Assignment;
+module.exports = Grade;

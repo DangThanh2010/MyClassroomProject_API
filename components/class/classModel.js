@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const db = require('../../database');
 const Assignment = require('../assignment/assignmentModel');
+const Grade = require('../grade/gradeModel');
 const Class = db.define('Class', {
   id: {
     type: DataTypes.INTEGER,
@@ -28,6 +29,9 @@ const Class = db.define('Class', {
     timestamps: false
 }); 
 Class.hasMany(Assignment,{
+  foreignKey: 'ClassId'
+})
+Class.hasMany(Grade,{
   foreignKey: 'ClassId'
 })
 db.sync({ alter: true });
