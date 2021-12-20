@@ -8,6 +8,13 @@ module.exports.listGrade = async function (req, res, next) {
         message: 'Successfully!!!',
     });
 }
+
+module.exports.addStudentListForClass = async (req, res, next) => {
+    console.log(req.file.path);
+    await service.addStudentListForClass(req.params.classId, req.file.path);
+    res.json({success: true, message: 'Add grade Successfully!'});
+}
+
 module.exports.updateGrade = async function (req, res, next) {
     const {id,point} = req.body;
     console.log(req.body);

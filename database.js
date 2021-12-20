@@ -4,12 +4,12 @@ const db = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.e
     host: process.env.DB_HOSTNAME,
     dialect: 'postgres',
     port: 5432,
-
+    /*
     dialectOptions: {ssl: {
         require: true,
         rejectUnauthorized: false
         }
-    },
+    },*/
     
 });
 try {
