@@ -9,7 +9,8 @@ module.exports.listGrade = async function (req, res, next) {
     });
 }
 module.exports.updateGrade = async function (req, res, next) {
-    const {id, point} = req.body;
+    const {id,point} = req.body;
+    console.log(req.body);
     await service.updateGrade(id, point);
     res.json({success: true, message: 'Update Successfully!'});
 }
