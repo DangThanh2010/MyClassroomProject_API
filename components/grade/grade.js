@@ -19,7 +19,9 @@ const upload = multer({
 
 router.get('/:classId', controller.listGrade);
 
-router.post('/:classId', upload.single('studentFile'), controller.addStudentListForClass);
+router.post('/listStudent/:classId', upload.single('studentFile'), controller.addStudentListForClass);
+
+router.post('/listGrade/:classId', upload.single('gradeFile'), controller.addGradeListForAssignment);
 
 router.put('/', controller.updateGrade);
 

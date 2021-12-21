@@ -59,6 +59,41 @@ module.exports.addStudentListForClass = async (classId, filePath) => {
     });
 }
 
+module.exports.addGradeListForAssignment = async (classId, assignmentId, filePath) => {
+  fs.createReadStream(filePath)
+    .pipe(csv())
+    .on('data', async (data) =>  {
+      const grade = await Grade.findOne({where: {studentId: data.StudentId, ClassId: classId, AssignmentId: assignmentId}});
+      if(grade){
+        await Grade.update({ point: data.Point}, {where: {id: grade.id}});
+      }
+      else {
+        const info = await Grade.findOne({where: {studentId: data.StudentId, ClassId: classId}});
+        if(info){
+          await Grade.create({
+            studentId: data.StudentId,
+            fullName: info.fullName,
+            point: data.Point,
+            AssignmentId: assignmentId,
+            ClassId: classId
+          });
+        }
+        else {
+          await Grade.create({
+            studentId: data.StudentId,
+            fullName: null,
+            point: data.Point,
+            AssignmentId: assignmentId,
+            ClassId: classId
+          });
+        }
+      }
+    })
+    .on('end', () => {
+      fs.unlinkSync(filePath);
+    });
+}
+
 module.exports.updateGrade = async (id,point) => {
   await Grade.update({point: point}, {where: {id: id}})
 };
