@@ -23,6 +23,6 @@ router.post('/listStudent/:classId', upload.single('studentFile'), controller.ad
 
 router.post('/listGrade/:classId', upload.single('gradeFile'), controller.addGradeListForAssignment);
 
-router.put('/', controller.updateGrade);
+router.post('/UpdateOrCreate/:id', controller.UpdateOrCreateGrade);
 
 module.exports = router;

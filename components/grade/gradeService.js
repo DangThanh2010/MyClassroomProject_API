@@ -94,6 +94,30 @@ module.exports.addGradeListForAssignment = async (classId, assignmentId, filePat
     });
 }
 
-module.exports.updateGrade = async (id,point) => {
-  await Grade.update({point: point}, {where: {id: id}})
+module.exports.updateorcreateGrade = async (classId,data) => {
+  const grade = await Grade.findOne({where: {studentId: data.studentId, ClassId: classId, AssignmentId: data.assignmentId}});
+      console.log(grade.dataValues.id);
+      if(grade){
+        await Grade.update({ point: data.point}, {where: {id: grade.dataValues.id}});
+      }
+      else {
+        const info = await Grade.findOne({where: {studentId: data.studentId, ClassId: classId}});
+        if(info){
+          await Grade.create({
+            studentId: data.studentId,
+            fullName: info.dataValues.fullName,
+            point: data.point,
+            AssignmentId: data.assignmentId,
+            ClassId: classId
+          });
+        } else {
+          await Grade.create({
+            studentId: data.studentId,
+            fullName: null,
+            point: data.point,
+            AssignmentId: data.assignmentId,
+            ClassId: classId
+          });
+        }
+      }
 };

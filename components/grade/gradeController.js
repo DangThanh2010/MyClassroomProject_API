@@ -27,3 +27,8 @@ module.exports.updateGrade = async function (req, res, next) {
     await service.updateGrade(id, point);
     res.json({success: true, message: 'Update Successfully!'});
 }
+module.exports.UpdateOrCreateGrade = async function(req, res, next) {
+    console.log(req.body);
+    await service.updateorcreateGrade(req.params.id, req.body);
+    res.json({success: true, message: 'Update Successfully!'});
+}
