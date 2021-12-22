@@ -1,5 +1,6 @@
 const service = require("./userService");
 const bcrypt = require("bcrypt");
+
 module.exports.getUser = async (req, res, next) => {
   const getUser = await service.getUser(parseInt(req.params.id));
   res.json(getUser);
@@ -8,6 +9,16 @@ module.exports.getUser = async (req, res, next) => {
 module.exports.listUser = async (req, res, next) => {
   const listUser = await service.listUser();
   res.json(listUser);
+};
+
+module.exports.getByStudentId = async (req, res, next) => {
+  const result = await service.getByStudentId(req.params.studentId);
+  if(result) {
+    res.json({success: true, result: result});
+  }
+  else{
+    res.json({success: false, result: result});
+  }
 };
 
 module.exports.editUserInfo = async (req, res, next) => {

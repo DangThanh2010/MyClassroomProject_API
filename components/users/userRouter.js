@@ -6,7 +6,7 @@ router.get('/:id', controller.getUser);
 
 router.get('/', controller.listUser);
 
-// router.post('/:id', controller.editUserInfo);
+router.get('/byStudentId/:studentId', controller.getByStudentId);
 
 router.get('/myself/get', controller.getMyself);
 router.post('/myself', controller.postMyself);

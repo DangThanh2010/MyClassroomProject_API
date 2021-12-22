@@ -10,6 +10,11 @@ module.exports.getUser = async (id) => {
   return result;
 };
 
+module.exports.getByStudentId = async (studentId) => {
+  const result = await model.findOne({ where: {IDstudent: studentId }});
+  return result;
+};
+
 module.exports.deleteUser = async (id) => {
   await model.destroy({
     where: {
