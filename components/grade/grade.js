@@ -25,4 +25,6 @@ router.post('/listGrade/:classId', upload.single('gradeFile'), controller.addGra
 
 router.post('/UpdateOrCreate/:id', controller.UpdateOrCreateGrade);
 
+router.post('/markDone/:classId', controller.markDoneGradeColumn);
+
 module.exports = router;

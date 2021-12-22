@@ -1,10 +1,10 @@
 const fs = require("fs");
 const csv = require("csv-parser");
-
+const nodemailer = require("nodemailer");
 const Grade = require("./gradeModel");
 const db = require("../../database");
 const Assignment = require("../assignment/assignmentModel");
-
+const UserModel= require("../users/userModel")
 module.exports.listGrade = async (classId) => {
   // const result = await Grade.findAll({where: {ClassId: classId}, order: [['studentId', 'ASC'], ['AssignmentId', 'ASC']]});
   const result =
@@ -121,10 +121,7 @@ module.exports.updateorcreateGrade = async (classId, data) => {
   });
   console.log(grade);
   if (grade) {
-    await Grade.update(
-      { point: data.point },
-      { where: { id: grade.id } }
-    );
+    await Grade.update({ point: data.point }, { where: { id: grade.id } });
   } else {
     await Grade.create({
       studentId: data.studentId,
@@ -134,4 +131,66 @@ module.exports.updateorcreateGrade = async (classId, data) => {
       ClassId: classId,
     });
   }
+};
+module.exports.markDoneGradeColumn = async (classId, assignmentId) => {
+  const grade = await Grade.findAll({
+    where: {
+      ClassId: classId,
+      AssignmentId: assignmentId,
+    },
+  });
+  console.log(grade);
+  let temp = [];
+  if (grade.length !== 0) {
+    for (let i = 0; i < grade.length; i++) {
+      temp.push({ studentId: grade[i].IdStudent });
+      const emailUser= await UserModel({
+        where: {
+          IDStudent: grade[i].IdStudent,   
+        },
+        attributes: ["email"],
+      });;
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS,
+        },
+      });
+
+      const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: req.body.email,
+        subject:
+          "Điểm số",
+        text:
+          "Điểm số của bạn là"
+      };
+
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+          res.json({ result: 0 });
+        } else {
+          console.log("Email sent: " + info.response);
+          res.json({ result: 1 });
+        }
+      });
+    }
+  }
+  console.log("temp", temp);
+  // if (grade) {
+  //   await Grade.update(
+  //     { point: data.point },
+  //     { where: { id: grade.id } }
+  //   );
+  // } else {
+  //   await Grade.create({
+  //     studentId: data.studentId,
+  //     fullName: data.fullName,
+  //     point: data.point,
+  //     AssignmentId: data.assignmentId,
+  //     ClassId: classId,
+  //   });
+  // }
 };
