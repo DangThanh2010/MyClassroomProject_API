@@ -4,7 +4,7 @@ const nodemailer = require("nodemailer");
 const Grade = require("./gradeModel");
 const db = require("../../database");
 const Assignment = require("../assignment/assignmentModel");
-const UserModel= require("../users/userModel")
+const UserModel = require("../users/userModel");
 module.exports.listGrade = async (classId) => {
   // const result = await Grade.findAll({where: {ClassId: classId}, order: [['studentId', 'ASC'], ['AssignmentId', 'ASC']]});
   const result =
@@ -143,42 +143,45 @@ module.exports.markDoneGradeColumn = async (classId, assignmentId) => {
   let temp = [];
   if (grade.length !== 0) {
     for (let i = 0; i < grade.length; i++) {
-      temp.push({ studentId: grade[i].IdStudent });
-      const emailUser= await UserModel({
+      // temp.push({ studentId: grade[i].IdStudent });
+      console.log("grade[i].IdStudent", grade[i].studentId);
+      const { email } = await UserModel.findOne({
         where: {
-          IDStudent: grade[i].IdStudent,   
+          IDstudent: grade[i].studentId,
         },
         attributes: ["email"],
-      });;
-      const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASS,
-        },
       });
+      if (email) {
+        console.log("emailUser", email);
+        const transporter = nodemailer.createTransport({
+          service: "gmail",
+          auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS,
+          },
+        });
 
-      const mailOptions = {
-        from: process.env.EMAIL_USER,
-        to: req.body.email,
-        subject:
-          "Điểm số",
-        text:
-          "Điểm số của bạn là"
-      };
+        const mailOptions = {
+          from: process.env.EMAIL_USER,
+          to: email,
+          subject: "ĐIỂM SỐ BÀI TẬP",
+          text: "Điểm số của bạn là:" + grade[i].point,
+        };
 
-      transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-          console.log(error);
-          res.json({ result: 0 });
-        } else {
-          console.log("Email sent: " + info.response);
-          res.json({ result: 1 });
-        }
-      });
+        transporter.sendMail(mailOptions, function (error, info) {
+          if (error) {
+            console.log(error);
+            // res.json({ result: 0 });
+          } else {
+            console.log("Email sent: " + info.response);
+            // res.json({ result: 1 });
+            console.log("da gui mail");
+          }
+        });
+      }
     }
   }
-  console.log("temp", temp);
+  // console.log("temp", temp);
   // if (grade) {
   //   await Grade.update(
   //     { point: data.point },
