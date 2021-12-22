@@ -5,6 +5,8 @@ const Grade = require("./gradeModel");
 const db = require("../../database");
 const Assignment = require("../assignment/assignmentModel");
 const UserModel = require("../users/userModel");
+const ClassModel = require("../class/classModel");
+
 module.exports.listGrade = async (classId) => {
   // const result = await Grade.findAll({where: {ClassId: classId}, order: [['studentId', 'ASC'], ['AssignmentId', 'ASC']]});
   const result =
@@ -139,20 +141,28 @@ module.exports.markDoneGradeColumn = async (classId, assignmentId) => {
       AssignmentId: assignmentId,
     },
   });
-  console.log(grade);
-  let temp = [];
   if (grade.length !== 0) {
     for (let i = 0; i < grade.length; i++) {
-      // temp.push({ studentId: grade[i].IdStudent });
-      console.log("grade[i].IdStudent", grade[i].studentId);
-      const { email } = await UserModel.findOne({
+      const user = await UserModel.findOne({
         where: {
           IDstudent: grade[i].studentId,
         },
         attributes: ["email"],
       });
+      const Class = await ClassModel.findOne({
+        where: {
+          id: grade[i].ClassId,
+        },
+        attributes: ["name"],
+      });
+      const Assign = await Assignment.findOne({
+        where: {
+          id: grade[i].AssignmentId,
+        },
+        attributes: ["name"],
+      });
+      const email=user.email;
       if (email) {
-        console.log("emailUser", email);
         const transporter = nodemailer.createTransport({
           service: "gmail",
           auth: {
@@ -164,8 +174,8 @@ module.exports.markDoneGradeColumn = async (classId, assignmentId) => {
         const mailOptions = {
           from: process.env.EMAIL_USER,
           to: email,
-          subject: "ĐIỂM SỐ BÀI TẬP",
-          text: "Điểm số của bạn là:" + grade[i].point,
+          subject: "Điểm số bài tập lớp: "+Class.name,
+          text: "Lớp: "+Class.name+ "\nBài tập: " + Assign.name + "\nĐiểm số của bạn là: " + grade[i].point,
         };
 
         transporter.sendMail(mailOptions, function (error, info) {
@@ -180,20 +190,7 @@ module.exports.markDoneGradeColumn = async (classId, assignmentId) => {
         });
       }
     }
+    return 1;
   }
-  // console.log("temp", temp);
-  // if (grade) {
-  //   await Grade.update(
-  //     { point: data.point },
-  //     { where: { id: grade.id } }
-  //   );
-  // } else {
-  //   await Grade.create({
-  //     studentId: data.studentId,
-  //     fullName: data.fullName,
-  //     point: data.point,
-  //     AssignmentId: data.assignmentId,
-  //     ClassId: classId,
-  //   });
-  // }
+  else return -1;
 };

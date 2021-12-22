@@ -35,9 +35,25 @@ module.exports.UpdateOrCreateGrade = async function (req, res, next) {
   res.json({ success: true, message: "Update Successfully!" });
 };
 module.exports.markDoneGradeColumn = async function (req, res, next) {
-  const { assignmentId } = req.body;
-  const classId = req.params.classId;
-  console.log("body", req.params.classId, req.body);
-  await service.markDoneGradeColumn(classId, assignmentId);
-  // res.json({success: true, message: 'Update Successfully!'});
+  try {
+    const { assignmentId } = req.body;
+    const classId = req.params.classId;
+    
+    const result=await service.markDoneGradeColumn(classId, assignmentId);
+    if(result===1)
+    res.json({
+      status: 1,
+      msg: "Đã gửi mail thông báo điểm cho các sinh viên.",
+    });
+    else
+    res.json({
+      status: -1,
+      msg: "Chưa nhập điểm cho cột này. Vui lòng nhập.",
+    });
+  } catch (error) {
+    res.json({
+      status: -1,
+      msg: "Hiện tại chưa thể gửi mail. Vui lòng thử lại.",
+    });
+  }
 };
