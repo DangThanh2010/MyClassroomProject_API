@@ -32,8 +32,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/grade',gradeRouter);
-app.use('/assignment', assignmentRouter);
 app.use('/auth',authRouter);
 app.use(passport.authenticate('jwt', {session : false}));
 app.use('/', indexRouter);
@@ -41,7 +39,8 @@ app.use('/class', classRouter);
 app.use('/userInClass', userInClassRouter);
 app.use('/assignment', assignmentRouter);
 app.use('/user', userRouter);
-app.use('/image', avatarRouter)
+app.use('/image', avatarRouter);
+app.use('/grade',gradeRouter);
 
 
 // catch 404 and forward to error handler
