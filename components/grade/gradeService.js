@@ -8,9 +8,14 @@ const UserModel = require("../users/userModel");
 const ClassModel = require("../class/classModel");
 
 module.exports.listGrade = async (classId) => {
-  
-  const result = await Grade.findAll({where: {ClassId: classId}, order: [['studentId', 'ASC'], ['AssignmentId', 'ASC']]}  );
-  
+  const result = await Grade.findAll({
+    where: { ClassId: classId },
+    order: [
+      ["studentId", "ASC"],
+      ["AssignmentId", "ASC"],
+    ],
+  });
+
   return result;
 };
 
@@ -139,28 +144,29 @@ module.exports.markDoneGradeColumn = async (classId, assignmentId) => {
       AssignmentId: assignmentId,
     },
   });
+  console.log('grade.length', grade.length)
   if (grade.length !== 0) {
     for (let i = 0; i < grade.length; i++) {
       const user = await UserModel.findOne({
         where: {
           IDstudent: grade[i].studentId,
         },
-        attributes: ["email"],
+        // attributes: ["email"],
       });
-      const Class = await ClassModel.findOne({
-        where: {
-          id: grade[i].ClassId,
-        },
-        attributes: ["name"],
-      });
-      const Assign = await Assignment.findOne({
-        where: {
-          id: grade[i].AssignmentId,
-        },
-        attributes: ["name"],
-      });
-      const email=user.email;
-      if (email) {
+      // const email = user.email;
+      if (user && user.email) {
+        const Class = await ClassModel.findOne({
+          where: {
+            id: grade[i].ClassId,
+          },
+          attributes: ["name"],
+        });
+        const Assign = await Assignment.findOne({
+          where: {
+            id: grade[i].AssignmentId,
+          },
+          attributes: ["name"],
+        });
         const transporter = nodemailer.createTransport({
           service: "gmail",
           auth: {
@@ -171,24 +177,20 @@ module.exports.markDoneGradeColumn = async (classId, assignmentId) => {
 
         const mailOptions = {
           from: process.env.EMAIL_USER,
-          to: email,
-          subject: "Điểm số bài tập lớp: "+Class.name,
-          text: "Lớp: "+Class.name+ "\nBài tập: " + Assign.name + "\nĐiểm số của bạn là: " + grade[i].point,
+          to: user.email,
+          subject: "Điểm số bài tập lớp: " + Class.name,
+          text:
+            "Lớp: " +
+            Class.name +
+            "\nBài tập: " +
+            Assign.name +
+            "\nĐiểm số của bạn là: " +
+            grade[i].point,
         };
-
-        transporter.sendMail(mailOptions, function (error, info) {
-          if (error) {
-            console.log(error);
-            // res.json({ result: 0 });
-          } else {
-            console.log("Email sent: " + info.response);
-            // res.json({ result: 1 });
-            console.log("da gui mail");
-          }
-        });
-      }
+        
+        transporter.sendMail(mailOptions);
+      } else continue;
     }
     return 1;
-  }
-  else return -1;
+  } else return -1;
 };

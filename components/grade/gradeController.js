@@ -4,18 +4,17 @@ const service = require("./gradeService");
 module.exports.listGrade = async function (req, res, next) {
   const listgrade = await service.listGrade(parseInt(req.params.classId));
   console.log(listgrade);
-  if(listgrade.length === 0){
+  if (listgrade.length === 0) {
     res.json({
-        data: null,
-        message: "Successfully!!!",
-      });
-  } 
-  else{
-    res.json({
-        data: listgrade,
-        message: "Successfully!!!",
+      data: null,
+      message: "Successfully!!!",
     });
-    }
+  } else {
+    res.json({
+      data: listgrade,
+      message: "Successfully!!!",
+    });
+  }
 };
 
 module.exports.addStudentListForClass = async (req, res, next) => {
@@ -49,19 +48,20 @@ module.exports.markDoneGradeColumn = async function (req, res, next) {
   try {
     const { assignmentId } = req.body;
     const classId = req.params.classId;
-    
-    const result=await service.markDoneGradeColumn(classId, assignmentId);
-    if(result===1)
-    res.json({
-      status: 1,
-      msg: "Đã gửi mail thông báo điểm cho các sinh viên.",
-    });
+
+    const result = await service.markDoneGradeColumn(classId, assignmentId);
+    if (result === 1)
+      res.json({
+        status: 1,
+        msg: "Đã gửi mail thông báo điểm cho các sinh viên đã có điểm.",
+      });
     else
-    res.json({
-      status: -1,
-      msg: "Chưa nhập điểm cho cột này. Vui lòng nhập.",
-    });
+      res.json({
+        status: -1,
+        msg: "Cột điểm này trống, vui lòng nhập điểm.",
+      });
   } catch (error) {
+    console.log('errrrrrrrrrr', error)
     res.json({
       status: -1,
       msg: "Hiện tại chưa thể gửi mail. Vui lòng thử lại.",
