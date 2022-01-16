@@ -80,7 +80,7 @@ module.exports.addStudentToClass = async (userId, codeStudent) => {
     const result = await userInClassModel.create({'role': 0, 'UserId': userId, 'ClassId': classId.id})
     return result;
   }
-  return [];
+  return classId;
 };
 module.exports.addTeacherToClass = async (userId, codeTeacher) => {
   const classId = await classModel.findOne({

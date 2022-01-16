@@ -19,8 +19,8 @@ module.exports.listUserInClass = async (req, res, next) => {
 }
 module.exports.addStudentToClass = async (req, res, next) => {
 
-  await service.addStudentToClass(req.user.id, req.params.codeStudent);
-  res.json('Add successful');
+  const result=await service.addStudentToClass(req.user.id, req.params.codeStudent);
+  res.json(result);
 }
 module.exports.addTeacherToClass = async (req, res, next) => {
 
