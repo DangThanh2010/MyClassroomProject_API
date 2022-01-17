@@ -11,15 +11,15 @@ passport.use(new LocalStrategy(
   function(email, password, done) {
     console.log("email ", email);
     console.log("password ", password);
-    User.findOne({where: {email: email, authType: "local"} }).then(user => {
+    User.findOne({where: {email: email, authType: "local", isActive: true, isBan: false} }).then(user => {
       if(user){
         if(bcrypt.compareSync(password, user.password)){
           done(null, user);
         }else{
-          done(null,false, {message: "Password mismatch with email"});
+          done(null,false, {message: "Mật khẩu không đúng"});
         }
       }else{
-        done(null,false, {message: "Email not found"});
+        done(null,false, {message: "Email không tồn tại hoặc chưa kích hoạt hoặc bị cấm"});
       }
     });
   }

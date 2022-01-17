@@ -64,6 +64,15 @@ module.exports.updatePassword= async (id, newPass) => {
     { where: { id } }
   )
 }
+
+module.exports.updatePasswordbyEmail= async (email, newPass) => {
+  return await model.update(
+    {
+      password:newPass
+    },
+    { where: { email: email, authType: 'local' } }
+  )
+}
 module.exports.ActiveAccount = async (id) => {
   return await model.update(
     {

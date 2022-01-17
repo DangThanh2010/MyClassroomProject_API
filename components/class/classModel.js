@@ -26,7 +26,7 @@ const Class = db.define('Class', {
 
 }, {
     tableName: 'Class',
-    timestamps: false
+    timestamps: true
 }); 
 Class.hasMany(Assignment,{
   foreignKey: 'ClassId'

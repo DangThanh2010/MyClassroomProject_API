@@ -153,19 +153,57 @@ transporter.sendMail(mailOptions, function(error, info){
 });
 }
 
+module.exports.sendMailRepass = async (req,res,next) => {
+  const {email, link} = req.body;
+  const user = service.getByEmail(email);
+  if(user){
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS,
+      },
+  });
+  
+  const mailOptions = {
+      from: process.env.EMAIL_USER, 
+      to: email, 
+      subject: "Đặt lại mật khẩu",
+      text: `Bạn vừa có yêu cầu đặt lại mật khẩu. Vui lòng truy cập vào ${link} để đặt lại mật khẩu`,
+  };
+  
+  transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+          console.log(error);
+          res.json({"result": 0});
+      } else {
+          console.log('Email sent: ' + info.response);
+          res.json({"result": 1});
+      }
+  });
+  }
+  else{
+    res.json({
+      msg: "không tìm thấy Email"
+    })
+  }
+}
+
 module.exports.RenewPassword = async (req, res, next) => {
   const {email, password} = req.body;
 
-  const user = service.getUser(id);
+  const user = service.getByEmail(email);
   if(user){
-    service.updatePassword(user.id,password);
+    service.updatePasswordbyEmail(email,password);
     res.json({
       status: 1,
+      success: true,
       msg: "Cập nhật mật khẩu thành công !!!"
     });
   }else{
     res.json({
       status: -1,
+      success: false,
       msg: "Không tìm thấy email !!!"
     })
   }
