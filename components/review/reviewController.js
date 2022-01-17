@@ -23,3 +23,12 @@ module.exports.addReview = async (req, res, next) => {
   );
   res.json({ success: true, message: "Add review Successfully!" });
 }
+module.exports.getClass = async (req, res, next) => {
+  const result = await service.getReview(parseInt(req.params.id));
+  if(result){
+      res.json(result);
+  }
+  else{
+      res.json({"id": -1});
+  }
+}

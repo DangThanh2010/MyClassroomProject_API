@@ -10,7 +10,7 @@ const Comment = db.define(
       primaryKey: true,
     },
     reviewId: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     isTeacher: {

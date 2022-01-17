@@ -10,7 +10,7 @@ const Review = db.define(
       primaryKey: true,
     },
     gradeId: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: true,
     },
     gradeWant: {
