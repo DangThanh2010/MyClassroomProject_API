@@ -19,6 +19,21 @@ module.exports.listGrade = async (classId) => {
   return result;
 };
 
+module.exports.listGradeForStudent = async (classId, studentId) => {
+  const result = await Grade.findAll({
+    where: { 
+      studentId: studentId,
+      ClassId: classId,
+      isCompleted: true
+    },
+    order: [
+      ["AssignmentId", "ASC"],
+    ],
+  });
+
+  return result;
+};
+
 module.exports.addStudentListForClass = async (classId, filePath) => {
   fs.createReadStream(filePath)
     .pipe(csv())

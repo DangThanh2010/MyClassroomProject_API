@@ -63,3 +63,7 @@ module.exports.updateIndex = async (id, NO) => {
 module.exports.updateAssignment = async (id, content) => {
   return await Assignment.update({name: content.name, point:content.point}, {where: {id: id}});
 }
+
+module.exports.getAssignment = async (id) => {
+  return await Assignment.findOne({where: {id: id}});
+}
