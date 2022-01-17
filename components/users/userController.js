@@ -1,9 +1,14 @@
 const service = require("./userService");
 const bcrypt = require("bcrypt");
-
+const nodemailer = require('nodemailer');
 module.exports.getUser = async (req, res, next) => {
   const getUser = await service.getUser(parseInt(req.params.id));
   res.json(getUser);
+};
+
+module.exports.getByEmail = async (req, res, next) => {
+  const getUser = await service.getByEmail(req.params.email);
+  res.json({data: getUser});
 };
 
 module.exports.listUser = async (req, res, next) => {
@@ -101,3 +106,67 @@ module.exports.changePassword = async (req, res, next) => {
     }
   }
 };
+module.exports.activeAccount = async (req, res, next) => {
+  const id = req.params.id;
+
+  const user = service.getUser(id);
+  if(user){
+    service.ActiveAccount(id);
+    res.json({
+      status: 1,
+      msg: "Kích hoạt account thành công !!!"
+    });
+  }else{
+    res.json({
+      status: -1,
+      msg: "Kích hoạt account không thành công. Đã xảy ra lỗi!!!"
+    })
+  }
+}
+
+module.exports.sendMailActive = async (req,res,next) => {
+  const {email, link} = req.body;
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+    },
+});
+
+const mailOptions = {
+    from: process.env.EMAIL_USER, 
+    to: email, 
+    subject: "Kích hoạt tài khoản Classroom",
+    text: `Bạn vừa đăng ký tài khoản Classroom. Làm ơn truy cập vào ${link} để kích hoạt tài khoản`,
+};
+
+transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+        console.log(error);
+        res.json({"result": 0});
+    } else {
+        console.log('Email sent: ' + info.response);
+        res.json({"result": 1});
+    }
+});
+}
+
+module.exports.RenewPassword = async (req, res, next) => {
+  const {email, password} = req.body;
+
+  const user = service.getUser(id);
+  if(user){
+    service.updatePassword(user.id,password);
+    res.json({
+      status: 1,
+      msg: "Cập nhật mật khẩu thành công !!!"
+    });
+  }else{
+    res.json({
+      status: -1,
+      msg: "Không tìm thấy email !!!"
+    })
+  }
+}

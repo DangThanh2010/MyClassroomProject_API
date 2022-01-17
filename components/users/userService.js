@@ -1,5 +1,7 @@
 const model = require("./userModel");
 
+
+
 module.exports.findUserByIDStudent = async (idStudent) => {
   const result = await model.findOne({where: {IDstudent: idStudent} });
   return result;
@@ -12,6 +14,11 @@ module.exports.getUser = async (id) => {
 
 module.exports.getByStudentId = async (studentId) => {
   const result = await model.findOne({ where: {IDstudent: studentId }});
+  return result;
+};
+
+module.exports.getByEmail = async (email) => {
+  const result = await model.findOne({ where: {email: email, authType: 'local'}});
   return result;
 };
 
@@ -57,3 +64,13 @@ module.exports.updatePassword= async (id, newPass) => {
     { where: { id } }
   )
 }
+module.exports.ActiveAccount = async (id) => {
+  return await model.update(
+    {
+      isActive: true,
+    },{
+      where: { id }
+    }
+  )
+}
+

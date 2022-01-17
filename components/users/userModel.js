@@ -36,10 +36,19 @@ const User = db.define("User", {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  isActive:{
+    type: DataTypes.BOOLEAN,
+    allowNull: true,
+  },
+  isBan:{
+    type: DataTypes.BOOLEAN,
+    allowNull: true,
+    defaultValue: false,
+  }
   
 }, {
     tableName: 'User',
-    timestamps: false
+    timestamps: true,
 });
 
 db.sync({ alter: true }).then(()=> console.log('Create userModel successfully'));

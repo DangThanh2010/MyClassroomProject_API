@@ -16,19 +16,20 @@ module.exports.register = async (req, res, next) => {
       } else {
         const salt = bcrypt.genSaltSync(10);
         const hashpass = bcrypt.hashSync(password, salt);
-        const newUser = new User({
+        User.create({
           email: email,
           password: hashpass,
           IDstudent: IDstudent,
           fullname: fullname,
-        });
-        newUser.save();
-        const token = JWTSign(newUser._id);
-        res.json({
-          message: "Đăng ký thành công!!!",
-          success: true,
-          token: token,
-        });
+          isActive: false,
+        }).then(data => {
+          res.json({
+            message: "Đăng ký thành công!!!",
+            success: true,
+            data: data
+          });
+        })
+        
       }
     })
     .catch((err) => {
@@ -51,6 +52,7 @@ module.exports.ImportDataGoogle = async (req, res, next) => {
         avatar: profile.imageUrl,
         authGoogleID: profile.googleId,
         fullname: profile.familyName + " " + profile.givenName,
+        isActive: true,
       });
       await newUser.save();
       req.user = newUser;

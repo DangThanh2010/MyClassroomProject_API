@@ -18,6 +18,8 @@ const gradeRouter = require('./components/grade/grade');
 const app = express();
 const passport = require('passport');
 const passportConfig = require('./middleware/passport');
+
+const controller = require('./components/users/userController');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -32,6 +34,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.get('/secret/:email', controller.getByEmail);
+app.get('/user/activeAccount/:id', controller.activeAccount);
+app.post('/user/sendMail', controller.sendMailActive);
 app.use('/auth',authRouter);
 app.use(passport.authenticate('jwt', {session : false}));
 app.use('/', indexRouter);
