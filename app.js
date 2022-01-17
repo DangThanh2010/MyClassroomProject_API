@@ -16,7 +16,8 @@ const avatarRouter =require('./components/avatar/avatarRouter');
 const assignmentRouter = require('./components/assignment/assignmentRouter');
 const commentRouter = require('./components/comment/commentRouter');
 const gradeRouter = require('./components/grade/grade');
-const reviewRouter=require('./components/review/review')
+const reviewRouter=require('./components/review/review');
+const notificationRouter = require('./components/notification/notification');
 const app = express();
 const passport = require('passport');
 const passportConfig = require('./middleware/passport');
@@ -52,7 +53,8 @@ app.use('/image', avatarRouter);
 app.use('/grade',gradeRouter);
 
 app.use('/comment', commentRouter);
-app.use('/review', reviewRouter)
+app.use('/review', reviewRouter);
+app.use('/notification', notificationRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
