@@ -209,3 +209,7 @@ module.exports.markDoneGradeColumn = async (classId, assignmentId) => {
     return 1;
   } else return -1;
 };
+
+module.exports.getGrade = async (id) => {
+  return await Grade.findOne({where: {id: id}});
+}

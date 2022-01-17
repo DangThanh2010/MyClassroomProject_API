@@ -12,3 +12,7 @@ module.exports.addReview = async (gradeId, grandWant, explaination) => {
     explaination: explaination,
   });
 };
+
+module.exports.getReview = async (id) => {
+  return await Review.findOne({where: {id: id}});
+}
