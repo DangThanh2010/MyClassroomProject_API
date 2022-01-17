@@ -17,10 +17,14 @@ const Review = db.define(
       type: DataTypes.INTEGER,
       allowNull: true,
     },
+    explaination: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     final: {
       type: DataTypes.BOOLEAN,
       allowNull: true,
-      defaultValue: 0,
+      defaultValue: false,
     },
   },
   {
