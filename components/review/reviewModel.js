@@ -13,14 +13,6 @@ const Review = db.define(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    isTeacher: {
-      type: DataTypes.BOOLEAN,
-      allowNull: true,
-    },
-    comment: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
     gradeWant: {
       type: DataTypes.INTEGER,
       allowNull: true,
@@ -37,6 +29,6 @@ const Review = db.define(
   }
 );
 
-db.sync({ alter: true });
+db.sync({ alter: true }).then(()=> console.log('Create reviewModel successfully'));;
 
 module.exports = Review;
