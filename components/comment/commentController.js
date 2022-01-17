@@ -2,15 +2,16 @@ const { set } = require("../../app");
 const service = require("./commentServices");
 const reviewService = require("../review/reviewService");
 const gradeService = require("../grade/gradeService");
+const userService = require("../users/userService");
 const assignmentService = require("../assignment/assignmentService");
-module.exports.addClass = async (req, res, next) => {
-    if(1)
-    {
-        await service.addClass();
-        res.json('Create successful');
-    }
-    else
-        res.json('Create unsuccessful');
+
+module.exports.addComment = async (req, res, next) => {
+    await service.addComment(
+        parseInt(req.body.reviewId),
+        req.body.isTeacher,
+        req.body.comment
+      );
+      res.json({ success: true, message: "Add comment Successfully!" });
 }
 
 module.exports.listCommentByReviewId = async (req, res, next) => {
@@ -21,13 +22,15 @@ module.exports.listCommentByReviewId = async (req, res, next) => {
     if(review){
         grade = await gradeService.getGrade(parseInt(review.gradeId));
         if(grade){
+            student = await userService.getByStudentId(grade.studentId);
             assignment = await assignmentService.getAssignment(parseInt(grade.AssignmentId));
-            if(assignment){
+            if(assignment && student){
                 res.json({
                     comments: comments,
                     review: review,
                     grade: grade,
                     assignment: assignment,
+                    student: student,
                     result: 1
                 })
             }else{

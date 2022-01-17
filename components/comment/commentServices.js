@@ -1,7 +1,11 @@
 const Comment = require("./commentModel");
-const Review = require("../review/reviewModel");
-module.exports.addClass = async () => {
-  const cls = await Review.create();
+
+module.exports.addComment = async (reviewId, isTeacher, comment) => {
+  const cls = await Comment.create({
+    reviewId: reviewId,
+    isTeacher: isTeacher,
+    comment: comment
+  })
 };
 
 
