@@ -20,12 +20,12 @@ const Review = db.define(
     final: {
       type: DataTypes.BOOLEAN,
       allowNull: true,
-      defaultValue: 0,
+      defaultValue: false,
     },
   },
   {
     tableName: "Review",
-    timestamps: false,
+    timestamps: true,
   }
 );
 
