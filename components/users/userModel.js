@@ -48,7 +48,7 @@ const User = db.define("User", {
   
 }, {
     tableName: 'User',
-    timestamps: true,
+    timestamps: false,
 });
 
 db.sync({ alter: true }).then(()=> console.log('Create userModel successfully'));
