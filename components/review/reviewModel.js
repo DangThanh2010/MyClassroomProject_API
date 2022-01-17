@@ -29,7 +29,7 @@ const Review = db.define(
   },
   {
     tableName: "Review",
-    timestamps: false,
+    timestamps: true,
   }
 );
 

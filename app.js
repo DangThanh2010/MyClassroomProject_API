@@ -14,8 +14,9 @@ const userRouter =require('./components/users/userRouter')
 const authRouter = require('./components/authentication/authRouter');
 const avatarRouter =require('./components/avatar/avatarRouter');
 const assignmentRouter = require('./components/assignment/assignmentRouter');
+const commentRouter = require('./components/comment/commentRouter');
 const gradeRouter = require('./components/grade/grade');
-const reviewRouter = require('./components/review/review');
+const reviewRouter=require('./components/review/review')
 const app = express();
 const passport = require('passport');
 const passportConfig = require('./middleware/passport');
@@ -49,8 +50,9 @@ app.use('/assignment', assignmentRouter);
 app.use('/user', userRouter);
 app.use('/image', avatarRouter);
 app.use('/grade',gradeRouter);
-app.use('/review', reviewRouter);
 
+app.use('/comment', commentRouter);
+app.use('/review', reviewRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

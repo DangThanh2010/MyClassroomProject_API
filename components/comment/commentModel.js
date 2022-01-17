@@ -24,7 +24,7 @@ const Comment = db.define(
   },
   {
     tableName: "Comment",
-    timestamps: false,
+    timestamps: true,
   }
 );
 
