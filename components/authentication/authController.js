@@ -29,6 +29,7 @@ module.exports.register = async (req, res, next) => {
             data: data
           });
         })
+        .catch(err => console.log(err));
         
       }
     })
