@@ -38,7 +38,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/secret/:email', controller.getByEmail);
-app.post('/user/sendMailRepass/', controller.sendMailRepass);
+app.post('/user/sendMailRepass', controller.sendMailRepass);
 app.post('/user/Repass', controller.RenewPassword)
 app.get('/user/activeAccount/:id', controller.activeAccount);
 app.post('/user/sendMail', controller.sendMailActive);

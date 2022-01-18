@@ -4,7 +4,7 @@ const User = require("../users/userModel");
 const { JWTSign } = require("../../middleware/jwt");
 
 module.exports.register = async (req, res, next) => {
-  const { email, password, IDstudent, fullname } = req.body;
+  const { email, password, fullname } = req.body;
   await service
     .IsExist(email)
     .then((user) => {
@@ -19,12 +19,11 @@ module.exports.register = async (req, res, next) => {
         User.create({
           email: email,
           password: hashpass,
-          IDstudent: IDstudent,
           fullname: fullname,
           isActive: false,
         }).then(data => {
           res.json({
-            message: "Đăng ký thành công!!!",
+            message: "Đăng ký thành công!!! Link kích hoạt được gửi vào email đã nhập",
             success: true,
             data: data
           });
