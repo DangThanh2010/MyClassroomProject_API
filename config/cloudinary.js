@@ -1,8 +1,6 @@
 const cloudinary = require("cloudinary").v2;
 
-// cloudinary.config({
-//   CLOUDINARY_URL: "cloudinary://481629412583211.-ztbz7uxGlDviRwg3czc8iivdKE@ddjuioczp",
-// });
+
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
     api_key: process.env.API_KEY,

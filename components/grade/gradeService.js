@@ -139,7 +139,7 @@ module.exports.updateorcreateGrade = async (classId, data) => {
       AssignmentId: data.assignmentId,
     },
   });
-  console.log(grade);
+  
   if (grade) {
     await Grade.update({ point: data.point }, { where: { id: grade.id } });
   } else {
@@ -171,9 +171,7 @@ module.exports.markDoneGradeColumn = async (classId, assignmentId) => {
         where: {
           IDstudent: grade[i].studentId,
         },
-        // attributes: ["email"],
       });
-      // const email = user.email;
       if (user && user.email) {
         const Class = await ClassModel.findOne({
           where: {

@@ -20,7 +20,7 @@ module.exports.listGrade = async function (req, res, next) {
 };
 
 module.exports.listGradeForStudent = async function (req, res, next) {
-  console.log(req.query.studentId);
+  
   
   const listgrade = await service.listGradeForStudent(parseInt(req.params.classId), req.query.studentId);
   let result = [];
@@ -55,13 +55,13 @@ module.exports.addGradeListForAssignment = async (req, res, next) => {
 
 module.exports.updateGrade = async function (req, res, next) {
   const { id, point } = req.body;
-  console.log(req.body);
+  
   await service.updateGrade(id, point);
   res.json({ success: true, message: "Update Successfully!" });
 };
 
 module.exports.UpdateOrCreateGrade = async function (req, res, next) {
-  console.log(req.body);
+  
   await service.updateorcreateGrade(req.params.id, req.body);
   res.json({ success: true, message: "Update Successfully!" });
 };

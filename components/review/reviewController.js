@@ -25,10 +25,10 @@ module.exports.addReview = async (req, res, next) => {
   res.json({ success: true, message: "Add review Successfully!" });
 }
 module.exports.getAllReviewByGradeId = async (req, res, next) => {
-  console.log('req', req.params.gradeId)
+  
   const result = await service.getAllReviewByGradeId(parseInt(req.params.gradeId));
   if(result){
-    console.log('result', result);
+    
       res.json(result);
   }
   else{

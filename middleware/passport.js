@@ -9,8 +9,7 @@ const bcrypt = require("bcrypt");
 passport.use(new LocalStrategy(
   {usernameField: "email", passwordField: "password"},
   function(email, password, done) {
-    console.log("email ", email);
-    console.log("password ", password);
+    
     User.findOne({where: {email: email, authType: "local", isActive: true, isBan: false} }).then(user => {
       if(user){
         if(bcrypt.compareSync(password, user.password)){
@@ -34,7 +33,7 @@ passport.use(
     },
     async function (jwt_payload, done) {
       try {
-        console.log(jwt_payload);
+        
         const user = await User.findOne({
           where: { id: jwt_payload.id },
         });
