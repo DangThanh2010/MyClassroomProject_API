@@ -107,3 +107,13 @@ module.exports.getRole = async (userId, classId) => {
   if(role) return role;
   return null;
 }
+module.exports.listStudentInClass = async (classId) => {
+  const list = await userInClassModel.findAll({
+    where: {
+      ClassId: classId,
+      role: 0,
+    },
+  });
+ return list;
+  
+}

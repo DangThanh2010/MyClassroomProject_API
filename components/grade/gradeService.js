@@ -165,7 +165,6 @@ module.exports.markDoneGradeColumn = async (classId, assignmentId) => {
       AssignmentId: assignmentId,
     },
   });
-  console.log('grade', grade)
   if (grade.length !== 0) {
     for (let i = 0; i < grade.length; i++) {
       const user = await UserModel.findOne({
@@ -219,3 +218,6 @@ module.exports.markDoneGradeColumn = async (classId, assignmentId) => {
 module.exports.getGrade = async (id) => {
   return await Grade.findOne({where: {id: id}});
 }
+module.exports.finishAll = async (classId) => {
+    await Grade.update({ isCompleted: true }, { where: { ClassId: classId } });
+};

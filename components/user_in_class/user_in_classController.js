@@ -32,3 +32,7 @@ module.exports.getRole = async (req, res, next) => {
   const result =await service.getRole(req.user.id, req.params.classId);
   res.json(result);
 }
+module.exports.listStudentInClass = async (req, res, next) => {
+  const result =await service.listStudentInClass(req.params.classId);
+  res.json(result);
+}
