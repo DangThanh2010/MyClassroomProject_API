@@ -83,7 +83,6 @@ module.exports.markDoneGradeColumn = async function (req, res, next) {
         msg: "Cột điểm này trống, vui lòng nhập điểm.",
       });
   } catch (error) {
-    console.log('errrrrrrrrrr', error)
     res.json({
       status: -1,
       msg: "Hiện tại chưa thể gửi mail. Vui lòng thử lại.",
