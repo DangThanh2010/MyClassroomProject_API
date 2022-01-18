@@ -5,13 +5,14 @@ const db = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.e
     dialect: 'postgres',
     port: 5432,
     
-    /*dialectOptions: {ssl: {
+    dialectOptions: {ssl: {
         require: true,
         rejectUnauthorized: false
         }
-    },*/
+    },
     
 });
+
 try {
     db.authenticate().then(
         console.log('Connection has been established successfully.')
