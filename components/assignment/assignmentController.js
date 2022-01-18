@@ -55,3 +55,8 @@ module.exports.updateAssignment = async (req, res, next) => {
     res.json({status: -1, msg: 'Cập nhật thất bại. Vui lòng thử lại'});
   }
 }
+
+module.exports.getAssignment = async (req, res, next) => {
+  const result = await service.getAssignment(req.params.id)
+  res.json(result);
+}

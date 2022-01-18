@@ -13,4 +13,5 @@ router.get('/:classId', controller.listAssignment);
 
 router.put('/:id', controller.updateAssignment);
 
+router.get('/:id/getAssignment', controller.getAssignment);
 module.exports = router;

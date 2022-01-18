@@ -92,5 +92,5 @@ module.exports.markDoneGradeColumn = async function (req, res, next) {
 module.exports.finishAll = async function (req, res, next) {
   const { idClass } = req.body;
   await service.finishAll(idClass);
-  res.json({ success: true, message: "Hoàn thành!" });
+  res.json({status: 1,  msg: 'Đã gửi thông báo đến tất cả sinh viên trong lớp'});
 };
