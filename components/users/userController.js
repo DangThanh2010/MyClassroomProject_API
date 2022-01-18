@@ -191,10 +191,12 @@ module.exports.sendMailRepass = async (req,res,next) => {
 
 module.exports.RenewPassword = async (req, res, next) => {
   const {email, password} = req.body;
-
-  const user = service.getByEmail(email);
+  let Email = email + "@gmail.com";
+  const salt = bcrypt.genSaltSync(10);
+  const hashpass = bcrypt.hashSync(password, salt);
+  const user = await service.getByEmail(Email);
   if(user){
-    service.updatePasswordbyEmail(email,password);
+    service.updatePasswordbyEmail(Email,hashpass);
     res.json({
       status: 1,
       success: true,
@@ -204,7 +206,7 @@ module.exports.RenewPassword = async (req, res, next) => {
     res.json({
       status: -1,
       success: false,
-      msg: "Không tìm thấy email !!!"
+      msg: "Email chưa được đăng ký!!!"
     })
   }
 }
