@@ -153,13 +153,19 @@ module.exports.updateorcreateGrade = async (classId, data) => {
   }
 };
 module.exports.markDoneGradeColumn = async (classId, assignmentId) => {
+  await Grade.update({ isCompleted: true },{
+    where: {
+      ClassId: classId,
+      AssignmentId: assignmentId,
+    },
+  });
   const grade = await Grade.findAll({
     where: {
       ClassId: classId,
       AssignmentId: assignmentId,
     },
   });
-  console.log('grade.length', grade.length)
+  console.log('grade', grade)
   if (grade.length !== 0) {
     for (let i = 0; i < grade.length; i++) {
       const user = await UserModel.findOne({
