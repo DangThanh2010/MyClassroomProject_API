@@ -2,6 +2,9 @@ const Class = require("./classModel");
 const UserInClass = require("../user_in_class/user_in_classModel");
 const User = require("../users/userModel");
 
+const assignmentService = require('../assignment/assignmentService');
+
+
 module.exports.listClass = async (user) => {
   const result = await User.findByPk(user.id, { include: Class });
   return result;
@@ -41,7 +44,11 @@ module.exports.removeClass = async (userID, classID) => {
   });
   if (result) {
     if (result.role === 2) {
+      const listAssignment = await assignmentService.getAssignmentByClassId(classID);
       UserInClass.destroy({ where: { ClassId: classID } });
+      for(let i = 0; i < listAssignment.length; i++){
+        await assignmentService.deleteAssignment(listAssignment[i].id);
+      }
       Class.destroy({ where: { id: classID } });
     } else {
       UserInClass.destroy({ where: { UserId: userID, ClassId: classID } });

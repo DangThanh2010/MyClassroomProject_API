@@ -2,6 +2,7 @@ const nodemailer = require('nodemailer');
 
 const service = require('./classService');
 
+
 module.exports.listClass = async (req, res, next) => {
     if(req.user){
         const listClass = await service.listClass(req.user);
@@ -45,6 +46,7 @@ module.exports.addClass = async (req, res, next) => {
 }
 
 module.exports.deleteOrLeaveClass = async (req, res, next) => {
+   
     await service.removeClass(req.user.id, parseInt(req.params.id));
     res.json('Delete or leave successful');
 }

@@ -1,5 +1,8 @@
 const Assignment = require('./assignmentModel');
+const Grade = require('../grade/gradeModel');
 const Class = require('../class/classModel');
+const Review = require('../review/reviewModel');
+const Comment = require('../comment/commentModel');
 
 module.exports.addAssignment = async (classId, name, point) => {
   const cls = await Class.findOne({where: {id: classId}});
@@ -43,9 +46,23 @@ module.exports.deleteAssignment = async (id) => {
         }
       }
     }
+    const listGrade =  await Grade.findAll({where: {AssignmentId: assignment.id}});
+    let listReview = [];
+    for(let i = 0; i < listGrade.length; i++){
+      listReview = listReview.concat(await Review.findAll({where: {gradeId: listGrade[i].id}}))
+    }
+
+    for(let i = 0; i < listReview.length; i++){
+      await Comment.destroy({where: {reviewId: listReview[i].id}});
+      await Review.destroy({where: {id: listReview[i].id}});
+    }
+    await Grade.destroy({
+      where: {AssignmentId: assignment.id}
+    });
     await Assignment.destroy({
       where: {id: assignment.id}
     });
+
     return true;
   }
   else 
@@ -66,4 +83,8 @@ module.exports.updateAssignment = async (id, content) => {
 
 module.exports.getAssignment = async (id) => {
   return await Assignment.findOne({where: {id: id}});
+}
+
+module.exports.getAssignmentByClassId = async (classId) => {
+  return await Assignment.findAll({where: {ClassId: classId}});
 }
