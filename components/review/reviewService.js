@@ -1,4 +1,5 @@
 const Review = require("./reviewModel");
+const Grade = require("../grade/gradeModel");
 const db = require("../../database");
 module.exports.getReviewByGradeId = async (gradeId) => {
   return await Review.findOne({where: {gradeId: gradeId}});
@@ -24,3 +25,17 @@ module.exports.getAllReviewByGradeId = async (id) => {
 module.exports.getReview = async (id) => {
   return await Review.findOne({where: {id: id}});
 }
+module.exports.acceptReview = async (reviewId, gradeId, gradeNew) => {
+  await Review.update(
+    {
+      final: true,
+    },
+    { where: { id: reviewId } }
+  );
+  await Grade.update(
+    {
+      point: gradeNew,
+    },
+    { where: { id: gradeId } }
+  );
+};

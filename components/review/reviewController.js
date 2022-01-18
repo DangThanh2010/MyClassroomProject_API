@@ -35,3 +35,12 @@ module.exports.getAllReviewByGradeId = async (req, res, next) => {
       res.json({"id": -1});
   }
 }
+module.exports.acceptReview = async (req, res, next) => {
+  await service.acceptReview(
+    req.body.id,
+    req.body.gradeId,
+    parseInt(req.body.gradeNew),
+    
+  );
+  res.json({ success: true, message: "Chấp nhận review thành công!" });
+}
