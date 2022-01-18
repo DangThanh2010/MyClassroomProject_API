@@ -39,7 +39,15 @@ passport.use(
           where: { id: jwt_payload.id },
         });
         if (!user) return done(null, false);
-        else return done(null, user);
+        else {
+          if(user.isBan)
+          {
+            return done(null, false);
+          }else{
+            return done(null, user);
+          }
+          
+        }
       } catch (err) {
         done(err, false);
       }
