@@ -44,3 +44,7 @@ module.exports.acceptReview = async (req, res, next) => {
   );
   res.json({ success: true, message: "Chấp nhận review thành công!" });
 }
+module.exports.refuseReview = async (req, res, next) => {
+  await service.refuseReview(req.body.id);
+  res.json({ success: true, message: "Từ chối review thành công!" });
+}
